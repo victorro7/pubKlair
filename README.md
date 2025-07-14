@@ -1,270 +1,183 @@
-# Klair Backend Service
----
+# Klair - AI-Powered Video Intelligence Platform
+
+[🌐 Visit the Klair Website](https://www.clipdai.com)
+
+## Dev
+
+For frontend development details, see [frontend/README.md](frontend/README.md)
+
+For backend development details, see [frontend/README.md](backend/README.md)
 
 ## 📖 Overview
 
-The Klair backend is a sophisticated, enterprise-grade Python application built with FastAPI that powers AI-driven video content analysis. It features a microservices architecture designed for scalability, real-time processing, and seamless integration with cloud services.
+Klair is a cutting-edge SaaS platform that leverages advanced multimodal AI to automatically analyze video content and identify potentially viral clips for social media platforms. Built for the creator economy and enterprise markets, Klair solves the critical pain point of manual video analysis that affects millions of content creators worldwide.
 
-### 🏗️ Architecture Principles
+### 🎯 The Problem We Solve
 
-- **Async-First**: Built entirely on async/await for maximum performance
-- **Microservices**: Modular services for video, audio, queue management, and AI processing
-- **Cloud-Native**: Designed for containerized deployment and auto-scaling
-- **Event-Driven**: Redis-based queue system for decoupled processing
-- **Type-Safe**: Comprehensive type hints with Pydantic models
+- **Content creators** spend hours manually reviewing footage to find shareable moments
+- **Streamers** struggle to identify engaging clips from long-form content
+- **Enterprises** lack tools to analyze video performance and extract actionable insights
+- **Marketers** need better understanding of what makes video content go viral
 
----
+### ✨ Our Solution
 
-## 🛠️ Technology Stack
-
-### Core Framework
-- **FastAPI 0.115+**: Modern, fast web framework with automatic API documentation
-- **Uvicorn**: Lightning-fast ASGI server
-- **Pydantic**: Data validation and settings management with type safety
-- **Python 3.11+**: Latest Python features and performance improvements
-
-### Database & Storage
-- **PostgreSQL 15+**: Primary database with ACID compliance
-- **SQLAlchemy 2.0**: Modern async ORM with declarative syntax
-- **Asyncpg**: High-performance PostgreSQL adapter
-- **Alembic**: Database migration management
-- **Google Cloud Storage**: Scalable object storage for video assets
-
-### Queue & Processing
-- **Redis 7+**: Message broker and caching layer
-- **Custom Queue Manager**: Tier-based job prioritization
-- **Async Workers**: Concurrent video processing pipeline
-- **Rate Limiting**: API quota management and burst protection
-
-### AI & Media Processing
-- **Google Vertex AI**: Gemini 2.5 Pro integration for multimodal analysis
-- **FFmpeg**: Professional video/audio processing and transcoding
-- **yt-dlp**: Universal video downloader supporting 1000+ sites
-- **Sieve API**: Specialized video autocropping and enhancement
-
-### Authentication & Security
-- **Clerk**: Enterprise-grade authentication and user management
-- **JWT**: Secure token-based authentication
-- **CORS**: Configurable cross-origin resource sharing
-- **Input Validation**: Comprehensive request/response validation
-
-### Monitoring & Logging
-- **Structlog**: Structured JSON logging for observability
-- **Custom Error Handling**: Detailed error tracking and reporting
-- **Health Checks**: Application and dependency monitoring
-- **Performance Metrics**: Request timing and throughput analysis
+Klair's **"Talk to Your Clips"** feature provides a conversational AI interface that not only generates clips but explains *why* they have viral potential, democratizing sophisticated video analytics for everyone.
 
 ---
 
-## 📂 Project Structure
+## 🏗️ Architecture Overview
 
-```
-backend/
-├── main.py                    # Application entry point & FastAPI setup
-├── requirements.txt           # Python dependencies
-├── alembic.ini               # Database migration configuration
-├── Dockerfile                # Container image definition
-│
-├── api/                      # API layer
-│   ├── models/              # Pydantic request/response models
-│   │   ├── auth.py         # Authentication models
-│   │   ├── klair.py        # Core video analysis models
-│   │   ├── upload.py       # File upload models
-│   │   └── user.py         # User management models
-│   └── routes/              # API route definitions
-│       ├── audio_routes.py  # Audio analysis endpoints
-│       ├── job_routes.py    # Job management endpoints
-│       ├── user_routes.py   # User profile endpoints
-│       ├── video_routes.py  # Video analysis endpoints
-│       └── webhook_routes.py # External webhook handlers
-│
-├── agents/                   # AI processing agents
-│   ├── base_agent.py        # Abstract base agent class
-│   ├── video_agent.py       # Video analysis with Gemini AI
-│   └── audio_agent.py       # Audio transcription & analysis
-│
-├── core/                     # Core application components
-│   ├── config.py            # Application configuration
-│   ├── auth.py              # Authentication middleware
-│   ├── exceptions.py        # Custom exception classes
-│   └── middleware.py        # Request/response middleware
-│
-├── db/                       # Database layer
-│   ├── base.py              # Database connection management
-│   ├── models/              # SQLAlchemy model definitions
-│   │   ├── clips.py        # Video clips data model
-│   │   ├── jobs.py         # Processing jobs model
-│   │   └── users.py        # User data model
-│   └── repositories/        # Data access layer
-│       ├── clips_repository.py
-│       ├── jobs_repository.py
-│       └── users_repository.py
-│
-├── services/                 # Business logic layer
-│   ├── agent_service.py     # AI agent coordination
-│   ├── audio_service.py     # Audio processing pipeline
-│   ├── video_service.py     # Video processing pipeline
-│   ├── video_worker.py      # Async job processor
-│   ├── sieve_service.py     # External API integration
-│   ├── queue/               # Queue management system
-│   │   ├── manager.py      # Job queue orchestration
-│   │   ├── tier_manager.py # Subscription tier handling
-│   │   └── usage_tracker.py # Usage analytics & limits
-│   └── video/               # Video-specific services
-│       ├── processor/       # Core video processing
-│       ├── ai_client/       # AI model integration
-│       ├── metadata.py      # Video metadata extraction
-│       └── sanitizer.py     # URL/URI sanitization
-│
-├── utils/                    # Utility functions
-│   ├── logging.py           # Structured logging setup
-│   ├── errors.py            # Error handling utilities
-│   └── gcp.py               # Google Cloud Platform helpers
-│
-├── migrations/               # Database migrations
-│   └── versions/            # Alembic migration files
-│
+```mermaid
+graph TB
+    A[Frontend - Next.js] --> B[API Gateway - FastAPI]
+    B --> C[Agent Service]
+    B --> D[Video Worker Service]
+    B --> E[Queue Manager - Redis]
+    
+    C --> F[Video Agent - Gemini AI]
+    C --> G[Audio Agent - Transcription]
+    
+    D --> H[Video Service - Processing]
+    D --> I[Audio Service - Analysis]
+    D --> J[Sieve Service - Autocrop]
+    
+    H --> K[Google Cloud Storage]
+    I --> L[Vertex AI]
+    J --> M[External Sieve API]
+    
+    B --> N[PostgreSQL Database]
+    E --> O[Redis Queue]
+    
+    P[Clerk Auth] --> A
+    Q[Webhooks] --> B
 ```
 
+### 🔧 Core Components
+
+- **Frontend**: React/Next.js application with real-time progress tracking
+- **Backend**: FastAPI-based microservices architecture
+- **AI Engine**: Google Gemini 2.5 Pro for multimodal video analysis
+- **Queue System**: Redis-based async job processing
+- **Storage**: Google Cloud Storage for video assets
+- **Database**: PostgreSQL with SQLAlchemy ORM
+- **Authentication**: Clerk for user management
+
 ---
 
+## 💡 Key Features
+
+### 🤖 AI-Powered Analysis
+- **Multimodal Processing**: Simultaneous analysis of video, audio, and text
+- **Viral Potential Scoring**: AI-driven assessment of content engagement potential
+- **Conversational Insights**: Natural language queries about video performance
+- **Smart Clip Generation**: Automated identification of highlight moments
+
+### 🎥 Video Processing
+- **Format Support**: MP4, MOV, AVI, WebM, and more
+- **Cloud Integration**: Direct integration with major platforms (YouTube, Twitch)
+- **Real-time Progress**: Live status updates during processing
+- **Batch Processing**: Concurrent analysis of multiple videos
+
+### 📊 Enterprise Features
+- **Usage Analytics**: Comprehensive tracking and reporting
+- **Tier Management**: Flexible subscription and resource allocation
+- **API Access**: RESTful APIs for integration
+- **Webhook Support**: Real-time notifications and callbacks
+
+### 🎨 User Experience
+- **Responsive Design**: Optimized for desktop and mobile
+- **Drag & Drop**: Intuitive file upload interface
+- **Real-time Updates**: WebSocket-based progress tracking
+- **Export Options**: Multiple formats for social media platforms
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+- **Framework**: Next.js 15 with React 18
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS with custom components
+- **UI Library**: Radix UI primitives
+- **Animation**: Framer Motion
+- **State Management**: React hooks with context
+- **Authentication**: Clerk integration
+
+### Backend
+- **Framework**: FastAPI with async/await
+- **Language**: Python 3.11+
+- **Database**: PostgreSQL with asyncpg
+- **ORM**: SQLAlchemy 2.0
+- **Queue**: Redis for job management
+- **Authentication**: Clerk Backend SDK
+- **Migration**: Alembic
+
+### AI & Processing
+- **AI Models**: Google Gemini 2.5 Pro via Vertex AI
+- **Video Processing**: FFmpeg for encoding/transcoding
+- **Audio Analysis**: Custom transcription pipeline
+- **External Services**: Sieve for specialized video operations
+
+### Infrastructure
+- **Cloud Platform**: Google Cloud Platform
+- **Storage**: Google Cloud Storage
+- **Containerization**: Docker
+- **Orchestration**: Cloud Run
+- **Monitoring**: Structured logging with structured
+- **CDN**: Google Cloud CDN
+
+---
 
 ### Prerequisites
 
-- **Python 3.11+** with pip
-- **PostgreSQL 15+** (local or cloud)
-- **Redis 7+** (local or cloud)
-- **FFmpeg** installed and in PATH
-- **Google Cloud SDK**
-
-## 🔌 API Endpoints
-
-### Core Video Analysis
-
-```http
-POST /api/klair/analyze
-```
-Submit video for AI analysis with optional parameters:
-
-```http
-GET /api/klair/status/{task_id}
-```
-Get real-time processing status with progress updates.
-
-```http
-GET /api/klair/results/{task_id}
-```
-Retrieve analysis results with generated clips and insights.
-
-### Audio Analysis
-
-```http
-POST /api/klair/analyze/audio
-```
-Analyze audio content with transcription and insights.
-
-### Job Management
-
-```http
-GET /api/klair/jobs
-```
-List user's analysis jobs with filtering and pagination.
-
-```http
-DELETE /api/klair/jobs/{job_id}
-```
-Delete analysis job and associated data.
-
-### User Management
-
-```http
-GET /api/klair/user/usage
-```
-Get usage statistics and tier information.
-
-```http
-GET /api/klair/user/stats
-```
-Comprehensive user analytics and activity.
-
-### File Operations
-
-```http
-POST /api/upload-url
-```
-Generate presigned URLs for direct file uploads.
-
-```http
-POST /api/klair/export
-```
-Export clips with custom formatting options.
-
-### Webhooks
-
-```http
-POST /webhooks/sieve/autocrop
-```
-Handle Sieve processing completion callbacks.
-
-```http
-POST /webhooks/clerk
-```
-Process Clerk authentication events.
+- **Node.js** 18+ and npm
+- **Python** 3.11+
+- **Docker** (optional)
+- **PostgreSQL** database
+- **Redis** instance
+- **Google Cloud** account with Vertex AI enabled
 
 ---
 
-## 🔧 Core Services
+## 📊 Project Structure
 
-### Video Processing Pipeline
-
-```python
-# services/video_service.py
-class VideoService:
-    async def process_video(self, video_url: str, context: Dict) -> Dict:
-        """Complete video processing workflow"""
-        # 1. Download/validate video
-        # 2. Extract metadata
-        # 3. Upload to cloud storage
-        # 4. Queue for AI analysis
-        # 5. Generate clips
-        # 6. Apply enhancements
+```
+klair/
+├── backend/                 # Python FastAPI backend
+│   ├── api/                # API routes and models
+│   ├── agents/             # AI agents for video/audio analysis
+│   ├── core/               # Configuration and authentication
+│   ├── db/                 # Database models and migrations
+│   ├── services/           # Business logic layer
+│   ├── utils/              # Utility functions
+│   └── main.py            # Application entry point
+├── frontend/               # Next.js React frontend
+│   ├── app/               # Next.js app directory
+│   ├── components/        # Reusable UI components
+│   ├── lib/               # Utility libraries
+│   └── public/            # Static assets
+├── docker-compose.yml     # Multi-service deployment
+├── Dockerfile            # Container configuration
+└── README.md            # Project documentation
 ```
 
-### AI Agent Coordination
+---
 
-```python
-# agents/video_agent.py
-class VideoAgent(BaseAgent):
-    async def analyze(self, video_uri: str, metadata: Dict) -> Dict:
-        """Multimodal video analysis with Gemini AI"""
-        # 1. Chunk video for processing
-        # 2. Analyze visual content
-        # 3. Extract audio for transcription
-        # 4. Generate insights and clip recommendations
-```
+## 📈 Performance & Scalability
 
-### Queue Management
+- **Concurrent Processing**: Handles multiple video analysis jobs simultaneously
+- **Horizontal Scaling**: Stateless architecture supports multiple instances
+- **Caching**: Redis caching for frequently accessed data
+- **CDN Integration**: Global content delivery via Google Cloud CDN
+- **Database Optimization**: Indexed queries and connection pooling
 
-```python
-# services/queue/manager.py
-class QueueManager:
-    async def enqueue_job(self, job_data: JobData) -> QueuePosition:
-        """Add job to tier-based priority queue"""
-        # 1. Validate user limits
-        # 2. Calculate priority score
-        # 3. Enqueue with metadata
-        # 4. Return position estimate
-```
+---
 
-### Usage Tracking
+## 🔒 Security & Privacy
 
-```python
-# services/queue/usage_tracker.py
-class UsageTracker:
-    def check_usage_limit(self, user_id: str, duration: int) -> Tuple[bool, Dict]:
-        """Enforce tier-based usage limits"""
-        # 1. Check current usage
-        # 2. Validate against tier limits
-        # 3. Update usage statistics
-        # 4. Return availability status
-```
+- **Authentication**: Secure JWT-based authentication with Clerk
+- **Data Encryption**: All data encrypted in transit and at rest
+- **Privacy Compliance**: GDPR and CCPA compliant data handling
+- **Rate Limiting**: API rate limiting to prevent abuse
+- **Input Validation**: Comprehensive validation of all user inputs
+

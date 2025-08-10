@@ -12,6 +12,22 @@ For backend development details, see [frontend/README.md](backend/README.md)
 
 Klair is a cutting-edge SaaS platform that leverages advanced multimodal AI to automatically analyze video content and identify potentially viral clips for social media platforms. Built for the creator economy and enterprise markets, Klair solves the critical pain point of manual video analysis that affects millions of content creators worldwide.
 
+## Klair in Action 🚀
+
+Here's a preview of the Klair user interface, from uploading a video to viewing AI-suggested clips.
+
+### Main Dashboard
+*Users can easily drag and drop video files for analysis.*
+<img src="klair-img/KlairHome.jpeg" alt="Klair Homepage" width="800">
+
+### Suggested Viral Clips
+*The AI identifies and presents potential high-engagement clips with timestamps.*
+<img src="klair-img/suggestedClips.PNG" alt="Suggested Clips" width="800">
+
+### Detailed Clip Analysis
+*Each clip comes with details that creators can use for their content.*
+<img src="klair-img/clipDetails.jpeg" alt="Clip Details View" width="800">
+
 ### 🎯 The Problem We Solve
 
 - **Content creators** spend hours manually reviewing footage to find shareable moments

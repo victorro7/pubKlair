@@ -1,7 +1,5 @@
 # Klair - AI-Powered Video Intelligence Platform
 
-[🌐 Visit the Klair Website](https://www.clipdai.com)
-
 ## Dev
 
 For frontend development details, see [frontend/README.md](frontend/README.md)

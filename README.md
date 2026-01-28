@@ -12,7 +12,11 @@ Klair is a cutting-edge SaaS platform that leverages advanced multimodal AI to a
 
 ## Klair in Action 🚀
 
-Here's a preview of the Klair user interface, from uploading a video to viewing AI-suggested clips.
+Here's a preview of Klair's user interface, from uploading a video to viewing AI-suggested clips.
+
+
+https://github.com/user-attachments/assets/be3dbde9-d39f-478b-aa94-0b85974b75ab
+
 
 ### Main Dashboard
 *Users can easily drag and drop video files for analysis.*

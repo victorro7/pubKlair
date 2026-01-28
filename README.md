@@ -24,6 +24,11 @@ https://github.com/user-attachments/assets/be3dbde9-d39f-478b-aa94-0b85974b75ab
 
 ### Suggested Viral Clips
 *The AI identifies and presents potential high-engagement clips with timestamps.*
+
+
+https://github.com/user-attachments/assets/a3fd43c2-c4cd-48cc-a3d4-9a1e95d47d2e
+
+
 <img src="klair-img/suggestedClips.PNG" alt="Suggested Clips" width="800">
 
 ### Detailed Clip Analysis

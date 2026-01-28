@@ -4,7 +4,7 @@
 
 For frontend development details, see [frontend/README.md](frontend/README.md)
 
-For backend development details, see [frontend/README.md](backend/README.md)
+For backend development details, see [backend/README.md](backend/README.md)
 
 ## 📖 Overview
 

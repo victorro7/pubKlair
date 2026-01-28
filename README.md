@@ -14,13 +14,12 @@ Klair is a cutting-edge SaaS platform that leverages advanced multimodal AI to a
 
 Here's a preview of Klair's user interface, from uploading a video to viewing AI-suggested clips.
 
+### Main Overview
+*Users can easily drag and drop video files for analysis and navigate to previously generated clips.*
 
 https://github.com/user-attachments/assets/be3dbde9-d39f-478b-aa94-0b85974b75ab
 
-
-### Main Dashboard
-*Users can easily drag and drop video files for analysis.*
-<img src="klair-img/KlairHome.jpeg" alt="Klair Homepage" width="800">
+<!-- <img src="klair-img/KlairHome.jpeg" alt="Klair Homepage" width="800"> -->
 
 ### Suggested Viral Clips
 *The AI identifies and presents potential high-engagement clips with timestamps.*
@@ -29,7 +28,7 @@ https://github.com/user-attachments/assets/be3dbde9-d39f-478b-aa94-0b85974b75ab
 https://github.com/user-attachments/assets/a3fd43c2-c4cd-48cc-a3d4-9a1e95d47d2e
 
 
-<img src="klair-img/suggestedClips.PNG" alt="Suggested Clips" width="800">
+<!-- <img src="klair-img/suggestedClips.PNG" alt="Suggested Clips" width="800"> -->
 
 ### Detailed Clip Analysis
 *Each clip comes with details that creators can use for their content.*
